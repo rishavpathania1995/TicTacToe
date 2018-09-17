@@ -8,12 +8,14 @@ board = [" "," "," "," "," "," "," "," "," "]
 player1 = "X"
 player2 = "O"
 
+
 def print_pattern():
     print("1 | 2 | 3")
     print("__________")
     print("4 | 5 | 6 ")
     print("__________")
     print("6 | 7 | 8 ")
+
 
 def print_board():
     print(f"{board[0]}|{board[1]}|{board[2]}")
@@ -22,31 +24,44 @@ def print_board():
     print("---------------------")
     print(f"{board[6]}|{board[7]}|{board[8]}")
 
-print_pattern()
 
-def check_win():
-    for a in list_win:
-        for b in a:
-            if player1 != board[b-1]:
+def input_value(player):
+
+    position = input("enter position")
+    if board[position-1] == " " and 1 <= position <= 9 and position.isdigit():
+        board[position-1] = player
+
+    else:
+        print("please enter correct position")
+        input_value(player)
+
+
+def win(player):
+    for wincombo in list_win:
+        for w in wincombo:
+            if player != board[w - 1]:
                 break
             else:
                 return True
-
+            #return True
     return False
 
-for _ in range(9):
-    print_board()
-    print("player1 turn: ")
-    p1 = int(input("player 1 turn "))   # need to add check if empty else no valid
-    board[p1-1] = player1
-    p2 = int(input("player 2 turn "))
-    board[p2-1] = player2
-    check_win()
+
+def main():
+    counter = 9
+    while counter:
+        input_value(player1)
+        print_board()
+        input_value(player2)
+        print_board()
+
+    else:
+        print("turn over")
+
+        counter -= 1
 
 
 
 
 
-if check_win():
-
-    print("player 1 win ")
+main()

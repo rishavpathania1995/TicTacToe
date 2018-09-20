@@ -4,7 +4,7 @@
 
 list_win = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
 
-board = [" "," "," "," "," "," "," "," "," "]
+board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
 player1 = "X"
 player2 = "O"
 
@@ -26,42 +26,58 @@ def print_board():
 
 
 def input_value(player):
+    print(f"Turn of player: {player}")
 
     position = input("enter position")
-    if board[position-1] == " " and 1 <= position <= 9 and position.isdigit():
-        board[position-1] = player
 
+    if position.isdigit():                         # check if digit
+        position = int(position)
+        if board[position-1] == " ":               # check if empty
+
+            #board[position-1] = player
+
+            if 0 <= position <= 9:                 # check if b/w 0-9
+                board[position-1] = player
+
+            else:
+                print("Please enter between 1 - 9")
+                input_value(player)
+        else:
+            print("Please Choose empty position")
+            input_value(player)
     else:
-        print("please enter correct position")
+        print("Please enter interger position between 1-9")
         input_value(player)
 
 
 def win(player):
+
     for wincombo in list_win:
         for w in wincombo:
-            if player != board[w - 1]:
+            if player != board[w - 1]:  # for else statement else only runs if for doest break
                 break
-            else:
-                return True
-            #return True
+        else:
+            return True
     return False
 
 
 def main():
-    counter = 9
+    counter = 8
     while counter:
         input_value(player1)
         print_board()
+        if win(player1):
+            print("Player 1 win !!!!")
+            break
         input_value(player2)
+        if win(player2):
+            print("Player 2 win !!!!")
+            break
+
         print_board()
-
-    else:
-        print("turn over")
-
         counter -= 1
 
 
+if __name__ == "__main__":
 
-
-
-main()
+    main()
